@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Coal Mine Monitoring Control Center</title>
+
+    <link
+    rel="stylesheet"
+    href="style.css">
+
+</head>
+
+<body>
+
+
+<!-- =========================================
+     LOGIN SCREEN
+========================================= -->
+
+<section
+id="loginScreen"
+class="login-screen">
+
+    <div class="login-card">
+
+        <div class="login-icon">
+            ⛏️
+        </div>
+
+        <p class="eyebrow">
+            Secure Local Monitoring
+        </p>
+
+        <h1>
+            Coal Mine Monitoring
+        </h1>
+
+        <p class="login-description">
+            Enter the dashboard password to access the Sensor ESP32 dashboard and ESP32-CAM monitoring page.
+        </p>
+
+        <label
+        class="password-label"
+        for="passwordInput">
+
+            Password
+
+        </label>
+
+        <input
+        id="passwordInput"
+        class="password-input"
+        type="password"
+        placeholder="Enter password"
+        autocomplete="current-password">
+
+        <p
+        id="loginError"
+        class="login-error"
+        aria-live="polite">
+        </p>
+
+        <button
+        id="loginButton"
+        class="login-button"
+        type="button">
+
+            UNLOCK DASHBOARD
+
+        </button>
+
+        <p class="login-note">
+            Local monitoring access only.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     MAIN DASHBOARD
+========================================= -->
+
+<main
+id="dashboardScreen"
+class="dashboard-screen hidden">
+
+    <div class="container">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+
+                <p class="eyebrow">
+                    Unified Local Network Monitoring
+                </p>
+
+                <h1 class="main-title">
+                    ⛏️ Coal Mine Monitoring Control Center
+                </h1>
+
+                <p class="subtitle">
+                    View the Sensor ESP32 safety dashboard and the ESP32-CAM webpage together.
+                </p>
+
+            </div>
+
+            <button
+            id="logoutButton"
+            class="logout-button"
+            type="button">
+
+                LOGOUT
+
+            </button>
+
+        </header>
+
+
+
+        <!-- URL CONFIGURATION -->
+
+        <section class="configuration-card">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        Device Configuration
+                    </p>
+
+                    <h2>
+                        Dashboard and Camera URLs
+                    </h2>
+
+                </div>
+
+                <p class="section-description">
+                    Enter the local network addresses manually. No ESP32 IP addresses are hardcoded.
+                </p>
+
+            </div>
+
+
+            <!-- SENSOR ESP32 URL -->
+
+            <div class="url-row">
+
+                <div class="input-group">
+
+                    <label for="sensorDashboardUrl">
+                        Sensor ESP32 Dashboard URL
+                    </label>
+
+                    <input
+                    id="sensorDashboardUrl"
+                    type="text"
+                    placeholder="Example: 192.168.0.105"
+                    autocomplete="off"
+                    inputmode="url">
+
+                    <small>
+                        This is the URL of your CoalMine Guardian sensor dashboard.
+                    </small>
+
+                </div>
+
+                <button
+                id="loadSensorButton"
+                class="button primary-button"
+                type="button">
+
+                    LOAD DASHBOARD
+
+                </button>
+
+            </div>
+
+
+            <!-- ESP32-CAM URL -->
+
+            <div class="url-row">
+
+                <div class="input-group">
+
+                    <label for="cameraUrl">
+                        ESP32-CAM URL
+                    </label>
+
+                    <input
+                    id="cameraUrl"
+                    type="text"
+                    placeholder="Example: 192.168.0.107"
+                    autocomplete="off"
+                    inputmode="url">
+
+                    <small>
+                        Enter the ESP32-CAM main webpage URL or its exact live camera stream URL.
+                    </small>
+
+                </div>
+
+                <button
+                id="loadCameraButton"
+                class="button success-button"
+                type="button">
+
+                    LOAD CAMERA
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- DEVICE PANELS -->
+
+        <section class="monitor-grid">
+
+
+            <!-- SENSOR DASHBOARD PANEL -->
+
+            <article class="monitor-card">
+
+                <div class="monitor-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            ESP32 Safety System
+                        </p>
+
+                        <h2>
+                            Sensor Dashboard
+                        </h2>
+
+                    </div>
+
+                    <span
+                    id="sensorStatus"
+                    class="panel-status disconnected">
+
+                        <span class="panel-status-dot"></span>
+
+                        <span id="sensorStatusText">
+                            Not loaded
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <div class="toolbar">
+
+                    <button
+                    id="sensorZoomOut"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        − Zoom
+
+                    </button>
+
+                    <span
+                    id="sensorZoomValue"
+                    class="zoom-value">
+
+                        100%
+
+                    </span>
+
+                    <button
+                    id="sensorZoomIn"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        + Zoom
+
+                    </button>
+
+                    <button
+                    id="sensorResetZoom"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        Reset
+
+                    </button>
+
+                    <button
+                    id="sensorRefresh"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        ↻ Refresh
+
+                    </button>
+
+                    <button
+                    id="sensorFullscreen"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        ⛶ Fullscreen
+
+                    </button>
+
+                    <button
+                    id="sensorOpenTab"
+                    class="tool-button open-button"
+                    type="button"
+                    disabled>
+
+                        ↗ Open Tab
+
+                    </button>
+
+                </div>
+
+
+                <div
+                id="sensorFramePanel"
+                class="frame-panel">
+
+                    <div
+                    id="sensorPlaceholder"
+                    class="placeholder">
+
+                        <div class="placeholder-icon">
+                            📊
+                        </div>
+
+                        <h3>
+                            Sensor dashboard not loaded
+                        </h3>
+
+                        <p>
+                            Enter the Sensor ESP32 Dashboard URL, then select Load Dashboard.
+                        </p>
+
+                    </div>
+
+                    <div
+                    id="sensorFrameScaleArea"
+                    class="frame-scale-area">
+
+                        <iframe
+                        id="sensorFrame"
+                        title="Sensor ESP32 Coal Mine Dashboard">
+                        </iframe>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ESP32-CAM PANEL -->
+
+            <article class="monitor-card">
+
+                <div class="monitor-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            ESP32-CAM System
+                        </p>
+
+                        <h2>
+                            Live Camera Page
+                        </h2>
+
+                    </div>
+
+                    <span
+                    id="cameraStatus"
+                    class="panel-status disconnected">
+
+                        <span class="panel-status-dot"></span>
+
+                        <span id="cameraStatusText">
+                            Not loaded
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <div class="toolbar">
+
+                    <button
+                    id="cameraZoomOut"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        − Zoom
+
+                    </button>
+
+                    <span
+                    id="cameraZoomValue"
+                    class="zoom-value">
+
+                        100%
+
+                    </span>
+
+                    <button
+                    id="cameraZoomIn"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        + Zoom
+
+                    </button>
+
+                    <button
+                    id="cameraResetZoom"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        Reset
+
+                    </button>
+
+                    <button
+                    id="cameraRefresh"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        ↻ Refresh
+
+                    </button>
+
+                    <button
+                    id="cameraFullscreen"
+                    class="tool-button"
+                    type="button"
+                    disabled>
+
+                        ⛶ Fullscreen
+
+                    </button>
+
+                    <button
+                    id="cameraOpenTab"
+                    class="tool-button open-button"
+                    type="button"
+                    disabled>
+
+                        ↗ Open Tab
+
+                    </button>
+
+                </div>
+
+
+                <div
+                id="cameraFramePanel"
+                class="frame-panel">
+
+                    <div
+                    id="cameraPlaceholder"
+                    class="placeholder">
+
+                        <div class="placeholder-icon">
+                            📷
+                        </div>
+
+                        <h3>
+                            ESP32-CAM page not loaded
+                        </h3>
+
+                        <p>
+                            Enter the ESP32-CAM URL, then select Load Camera.
+                        </p>
+
+                    </div>
+
+                    <div
+                    id="cameraFrameScaleArea"
+                    class="frame-scale-area">
+
+                        <iframe
+                        id="cameraFrame"
+                        title="ESP32-CAM Camera Page"
+                        allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- INFORMATION -->
+
+        <section class="information-card">
+
+            <h2>
+                Connection Notes
+            </h2>
+
+            <ul>
+
+                <li>
+                    Keep the Sensor ESP32, ESP32-CAM, and viewing computer or phone on the same local Wi-Fi network.
+                </li>
+
+                <li>
+                    Enter only the correct local device URLs. The page automatically adds <code>http://</code> if you enter only an IP address.
+                </li>
+
+                <li>
+                    If an ESP32 webpage does not display inside the panel, select <strong>Open Tab</strong>. Some ESP32 firmware blocks iframe embedding.
+                </li>
+
+                <li>
+                    Zoom changes the display scale of the webpage inside each monitoring panel.
+                </li>
+
+            </ul>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
